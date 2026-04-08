@@ -3,6 +3,7 @@
   "name": "Smart Tab Assistant: Group, Clean, Analyze your tabs",
   "short_name": "Smart Tab Assistant",
   "version": "1.0.2",
+  "update_url": "https://pavndutt.github.io/Smart-Tab-Assistant/updates.xml",
   "description": "Smart tab manager to auto-group inactive tabs, close duplicate tabs, track active tab time, and save tabs for later with notes.",
   "permissions": [
     "tabs",
