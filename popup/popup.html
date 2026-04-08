@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Tab Assistant</title>
+    <link rel="stylesheet" href="popup.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="chart.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="header-orb header-orb-1"></div>
+            <div class="header-orb header-orb-2"></div>
+            <div class="header-orb header-orb-3"></div>
+            <div class="header-content">
+                <div class="header-logo">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 3h7v7H3z" />
+                        <path d="M14 3h7v7h-7z" />
+                        <path d="M3 14h7v7H3z" />
+                        <path d="M17.5 14l4 4m0-4l-4 4" />
+                    </svg>
+                </div>
+                <div class="header-text">
+                    <h1>Smart Tab Assistant</h1>
+                    <p class="subtitle">Focus · Track · Organize</p>
+                </div>
+                <div class="header-badge" id="header-tab-count">— tabs</div>
+            </div>
+        </header>
+
+        <div class="body-content">
+            <section id="duplicate-manager" class="alert-card hidden">
+                <div class="alert-icon">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                        <line x1="12" y1="9" x2="12" y2="13" />
+                        <line x1="12" y1="17" x2="12.01" y2="17" />
+                    </svg>
+                </div>
+                <div class="alert-body">
+                    <div class="alert-title">Duplicate tabs detected</div>
+                    <div class="alert-desc"><span id="duplicate-count">0</span> duplicate tabs open right now</div>
+                </div>
+                <button id="clean-duplicates-btn" class="btn btn-danger btn-sm">Clean</button>
+            </section>
+
+            <section class="quick-actions-card">
+                <div class="qa-row">
+                    <button id="manual-sleep-btn" class="btn btn-ghost">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                        </svg>
+                        Sleep Inactive
+                    </button>
+                    <button id="save-tab-btn" class="btn btn-primary">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                            <polyline points="17 21 17 13 7 13 7 21" />
+                            <polyline points="7 3 7 8 15 8" />
+                        </svg>
+                        Save &amp; Close
+                    </button>
+                </div>
+                <div class="input-wrapper" style="margin-top: 10px;">
+                    <svg class="input-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                    </svg>
+                    <input type="text" id="tab-note" placeholder="Add a note to this tab…" autocomplete="off">
+                </div>
+            </section>
+
+            <div class="tabs-container">
+                <div class="tabs-header">
+                    <button class="tab-btn active" data-tab="top-tabs">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                            <polyline points="17 6 23 6 23 12" />
+                        </svg>
+                        Usage
+                    </button>
+                    <button class="tab-btn" data-tab="stats">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="3" width="20" height="14" rx="2" />
+                            <line x1="8" y1="21" x2="16" y2="21" />
+                            <line x1="12" y1="17" x2="12" y2="21" />
+                        </svg>
+                        Stats
+                    </button>
+                    <button class="tab-btn" data-tab="saved-tabs">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                            <polyline points="17 21 17 13 7 13 7 21" />
+                            <polyline points="7 3 7 8 15 8" />
+                        </svg>
+                        Saved
+                    </button>
+                    <button class="tab-btn" data-tab="sleep-logs">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                        </svg>
+                        Logs
+                    </button>
+                </div>
+
+                <!-- TOP USAGE TAB -->
+                <div id="top-tabs-view" class="tab-content active">
+                    <div class="top-tabs-controls">
+                        <div class="period-pills" id="top-usage-period">
+                            <button class="period-pill" data-period="today">Today</button>
+                            <button class="period-pill" data-period="week">This Week</button>
+                            <button class="period-pill active" data-period="alltime">All Time</button>
+                        </div>
+                        <div class="input-wrapper search-compact">
+                            <svg class="input-icon" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8" />
+                                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                            </svg>
+                            <input type="text" id="search-top-tabs" placeholder="Filter tabs…" autocomplete="off">
+                        </div>
+                    </div>
+                    <ul id="top-tabs-list" class="item-list"></ul>
+                </div>
+
+                <!-- STATS TAB -->
+                <div id="stats-view" class="tab-content">
+                    <div class="stats-controls">
+                        <button class="stats-period-btn active" data-period="today">Today</button>
+                        <button class="stats-period-btn" data-period="daily">7 Days</button>
+                        <button class="stats-period-btn" data-period="weekly">4 Weeks</button>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="usageChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- SAVED TABS -->
+                <div id="saved-tabs-view" class="tab-content">
+                    <div class="input-wrapper search-compact" style="margin-bottom: 8px; flex-shrink: 0;">
+                        <svg class="input-icon" width="12" height="12" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8" />
+                            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+                        <input type="text" id="search-saved-tabs" placeholder="Search saved tabs…" autocomplete="off">
+                    </div>
+                    <ul id="saved-tabs-list" class="item-list"></ul>
+                </div>
+
+                <!-- SLEEP LOGS -->
+                <div id="sleep-logs-view" class="tab-content">
+                    <ul id="sleep-logs-list" class="item-list"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="popup.js"></script>
+</body>
+
+</html>
