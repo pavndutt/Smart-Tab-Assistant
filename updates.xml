@@ -4,8 +4,8 @@
   <app appid="epncaedbpifoehbkcehfgiejdhhpebai">
     <!-- The version matches what is in your manifest.json! -->
     <updatecheck 
-      codebase="https://pavndutt.github.io/Smart-Tab-Assistant/extension_v1.0.2.crx" 
-      version="1.0.2" 
+      codebase="https://pavndutt.github.io/Smart-Tab-Assistant/extension_v1.0.3.crx" 
+      version="1.0.3" 
     />
   </app>
 </gupdate>
